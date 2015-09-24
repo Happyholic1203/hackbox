@@ -27,6 +27,9 @@ RUN apt-get update && \
 	chmod +x metasploit-latest-linux-x64-installer.run && \
 	./metasploit-latest-linux-x64-installer.run --mode unattended --unattendedmodeui none && \
 	rm -f metasploit-latest-linux-x64-installer.run && \
+    cd /opt && \
+    git clone https://bitbucket.org/LaNMaSteR53/recon-ng && \
+    ln -sf /opt/recon-ng/recon-ng /usr/local/bin/recon-ng && \
 	echo 'alias msfconsole="/opt/metasploit/ctlscript.sh start >/dev/null 2>&1 & msfconsole"' >> ~/.bash_aliases && \
 	echo "#!/bin/bash" >> ~/init && \
 	echo "TERM=xterm-256color tmux" >> ~/init && \
