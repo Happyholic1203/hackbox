@@ -39,6 +39,7 @@ RUN apt-get update && \
 	make install && \
 	cd ../.. && \
 	rm -rf z3 && \
+    cd ~ && \
 	wget -qO- qira.me/dl | unxz | tar x && \
 	cd qira && \
 	sed -i 's/apt-get install/apt-get install -y/g' install.sh && \
@@ -55,6 +56,7 @@ RUN apt-get update && \
     tar -zxvf sqlmap.tar.gz && \
     mv sqlmapproject-sqlmap-* sqlmap && \
     ln -sf `pwd`/sqlmap/sqlmap.py /usr/local/bin/sqlmap && \
+    rm -f sqlmap.tar.gz && \
     cd /opt && \
     git clone https://bitbucket.org/LaNMaSteR53/recon-ng && \
     ln -sf /opt/recon-ng/recon-ng /usr/local/bin/recon-ng && \
