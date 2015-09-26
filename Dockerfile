@@ -60,9 +60,9 @@ RUN apt-get update && \
     cd /opt && \
     git clone https://bitbucket.org/LaNMaSteR53/recon-ng && \
     ln -sf /opt/recon-ng/recon-ng /usr/local/bin/recon-ng && \
-    echo "#\!/bin/bash" > ~/msfconsole && \
+    echo "#!/bin/bash" > ~/msfconsole && \
     echo "pass=`sed -n 's/\s*password:\s*\"\([0-9a-z]*\)\"$/\1/p' /opt/metasploit/apps/pro/ui/config/database.yml | sort | uniq`" >> ~/msfconsole && \
-    echo "/usr/local/bin/msfconsole --quiet -x 'db_disconnect; db_connect msf3:$pass@localhost:7337/msf3'" >> ~/msfconsole && \
+    echo "/usr/local/bin/msfconsole --quiet -x \"db_disconnect; db_connect msf3:$pass@localhost:7337/msf3\"" >> ~/msfconsole && \
     chmod +x ~/msfconsole && \
     echo "alias msfconsole='~/msfconsole'" >> ~/.bash_aliases && \
 	echo "#!/bin/bash" >> ~/init && \
