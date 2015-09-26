@@ -51,7 +51,7 @@ RUN apt-get update && \
     git clone https://github.com/longld/peda ~/peda && \
     echo "source ~/peda/peda.py" >> ~/.gdbinit && \
     cd ~ && \
-    wget 'https://github.com/sqlmapproject/sqlmap/tarball/master' --output=sqlmap.tar.gz && \
+    wget 'https://github.com/sqlmapproject/sqlmap/tarball/master' --output-document=sqlmap.tar.gz && \
     tar -zxvf sqlmap.tar.gz && \
     mv sqlmapproject-sqlmap-* sqlmap && \
     ln -sf `pwd`/sqlmap/sqlmap.py /usr/local/bin/sqlmap && \
