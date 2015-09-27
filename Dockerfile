@@ -22,7 +22,7 @@ MAINTAINER Yu-Cheng (Henry) Huang
 #       - PwnTools
 
 RUN apt-get update && \
-	apt-get install -y man vim tmux nmap git gdb curl python-pip python-dev build-essential john strace ltrace ipython gcc g++ wget && \
+	apt-get install -y man vim tmux nmap git gdb curl python-pip python-dev build-essential john strace ltrace ipython gcc g++ wget libc6-dev-i386 && \
 	pip install --upgrade pip && \
     pip install pwntools && \
 	git clone https://github.com/Happyholic1203/dotfiles && \
@@ -62,7 +62,9 @@ RUN apt-get update && \
     ln -sf /opt/recon-ng/recon-ng /usr/local/bin/recon-ng && \
     echo "#!/bin/bash" > ~/msfconsole && \
     echo "pass=`sed -n 's/\s*password:\s*\"\([0-9a-z]*\)\"$/\1/p' /opt/metasploit/apps/pro/ui/config/database.yml | sort | uniq`" >> ~/msfconsole && \
-    echo "/usr/local/bin/msfconsole --quiet -x \"db_disconnect; db_connect msf3:$pass@localhost:7337/msf3\"" >> ~/msfconsole && \
+    echo 'msf=/opt/metasploit/ctlscript.sh' >> ~/msfconsole && \
+    echo '$msf status | grep "already running" || $msf start' >> ~/msfconsole && \
+    echo '/usr/local/bin/msfconsole --quiet -x "db_disconnect; db_connect msf3:$pass@localhost:7337/msf3"' >> ~/msfconsole && \
     chmod +x ~/msfconsole && \
     echo "alias msfconsole='~/msfconsole'" >> ~/.bash_aliases && \
 	echo "#!/bin/bash" >> ~/init && \
