@@ -7,6 +7,7 @@ MAINTAINER Yu-Cheng (Henry) Huang
 #       - g++
 #       - git
 #       - Vim with lots of plugins
+#       - ctags (for NerdTree)
 #   PenTest Tools:
 #       - Metasploit
 #       - sqlmap
@@ -22,7 +23,9 @@ MAINTAINER Yu-Cheng (Henry) Huang
 #       - PwnTools
 
 RUN apt-get update && \
-	apt-get install -y man vim tmux nmap git gdb curl python-pip python-dev build-essential john strace ltrace ipython gcc g++ wget libc6-dev-i386 && \
+	apt-get install -y man vim tmux nmap git gdb curl python-pip python-dev \
+        build-essential john strace ltrace ipython gcc g++ wget \
+        libc6-dev-i386 ctags && \
 	pip install --upgrade pip && \
     pip install pwntools && \
 	git clone https://github.com/Happyholic1203/dotfiles && \
