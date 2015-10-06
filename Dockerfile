@@ -25,7 +25,7 @@ MAINTAINER Yu-Cheng (Henry) Huang
 RUN apt-get update && \
 	apt-get install -y man vim tmux nmap git gdb curl python-pip python-dev \
         build-essential john strace ltrace ipython gcc g++ wget \
-        libc6-dev-i386 ctags && \
+        libc6-dev-i386 ctags gdbserver && \
 	pip install --upgrade pip && \
     pip install pwntools && \
 	git clone https://github.com/Happyholic1203/dotfiles && \
