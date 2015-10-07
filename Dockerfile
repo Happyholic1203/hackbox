@@ -74,6 +74,7 @@ RUN apt-get update && \
     echo '/usr/local/bin/msfconsole --quiet -x "db_disconnect; db_connect msf3:$pass@localhost:7337/msf3"' >> ~/msfconsole && \
     chmod +x ~/msfconsole && \
     echo "alias msfconsole='~/msfconsole'" >> ~/.bash_aliases && \
+    echo "alias cls='clear'" >> ~/.bash_aliases && \
 	echo "#!/bin/bash" >> ~/init && \
 	echo "TERM=xterm-256color tmux" >> ~/init && \
 	echo "bash" >> ~/init && \
