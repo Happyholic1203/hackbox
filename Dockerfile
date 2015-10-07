@@ -63,6 +63,10 @@ RUN apt-get update && \
     cd /opt && \
     git clone https://bitbucket.org/LaNMaSteR53/recon-ng && \
     ln -sf /opt/recon-ng/recon-ng /usr/local/bin/recon-ng && \
+    cd /tmp && \
+    wget http://www.capstone-engine.org/download/3.0.4/ubuntu-14.04/libcapstone3_3.0.4-0.1ubuntu1_amd64.deb && \
+    dpkg -i libcapstone3_3.0.4-0.1ubuntu1_amd64.deb && \
+    rm -f libcapstone3_3.0.4-0.1ubuntu1_amd64.deb && \
     echo "#!/bin/bash" > ~/msfconsole && \
     echo "pass=`sed -n 's/\s*password:\s*\"\([0-9a-z]*\)\"$/\1/p' /opt/metasploit/apps/pro/ui/config/database.yml | sort | uniq`" >> ~/msfconsole && \
     echo 'msf=/opt/metasploit/ctlscript.sh' >> ~/msfconsole && \
