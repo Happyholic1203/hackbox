@@ -1,4 +1,4 @@
-FROM ubuntu:14.04
+FROM happyholic1203/devbox
 MAINTAINER Yu-Cheng (Henry) Huang
 
 # Installed Packages:
@@ -23,16 +23,9 @@ MAINTAINER Yu-Cheng (Henry) Huang
 #       - PwnTools
 
 RUN apt-get update && \
-	apt-get install -y man vim tmux nmap git gdb curl python-pip python-dev \
-        build-essential john strace ltrace ipython gcc g++ wget \
-        libc6-dev-i386 ctags gdbserver && \
-	pip install --upgrade pip && \
+	apt-get install -y nmap gdb john strace ltrace gcc g++ libc6-dev-i386 && \
+    ctags gdbserver && \
     pip install pwntools && \
-	git clone https://github.com/Happyholic1203/dotfiles && \
-	cd dotfiles && \
-	git checkout -b vim origin/vim && \
-	chmod +x ./install.sh && \
-	./install.sh && \
 	cd /tmp && \
 	git clone https://github.com/Z3Prover/z3 && \
 	cd z3 && \
@@ -73,13 +66,7 @@ RUN apt-get update && \
     echo '$msf status | grep "already running" || $msf start' >> ~/msfconsole && \
     echo '/usr/local/bin/msfconsole --quiet -x "db_disconnect; db_connect msf3:$pass@localhost:7337/msf3"' >> ~/msfconsole && \
     chmod +x ~/msfconsole && \
-    echo "alias msfconsole='~/msfconsole'" >> ~/.bash_aliases && \
-	echo "#!/bin/bash" >> ~/init && \
-	echo "TERM=xterm-256color tmux" >> ~/init && \
-	echo "bash" >> ~/init && \
-	chmod +x ~/init
+    echo "alias msfconsole='~/msfconsole'" >> ~/.bash_aliases
 
 # qira
 EXPOSE 3002 3003 4000
-
-CMD ["/root/init"]
