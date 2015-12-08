@@ -24,7 +24,7 @@ MAINTAINER Yu-Cheng (Henry) Huang
 
 RUN apt-get update && \
 	apt-get install -y nmap gdb john strace ltrace gcc g++ libc6-dev-i386 \
-        ctags gdbserver && \
+        ctags gdbserver python-dbg && \
     pip install pwntools && \
 	cd /tmp && \
 	git clone https://github.com/Z3Prover/z3 && \
