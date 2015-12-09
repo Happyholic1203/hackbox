@@ -23,28 +23,30 @@ MAINTAINER Yu-Cheng (Henry) Huang
 #       - PwnTools
 
 RUN apt-get update && \
-	apt-get install -y nmap gdb john strace ltrace gcc g++ libc6-dev-i386 \
+    apt-get install -y nmap gdb john strace ltrace gcc g++ libc6-dev-i386 \
         ctags gdbserver python-dbg && \
     pip install pwntools && \
-	cd /tmp && \
-	git clone https://github.com/Z3Prover/z3 && \
-	cd z3 && \
-	python scripts/mk_make.py && \
-	cd build && \
-	make && \
-	make install && \
-	cd ../.. && \
-	rm -rf z3 && \
+    cd /tmp && \
+    git clone https://github.com/Z3Prover/z3 && \
+    cd z3 && \
+    git checkout -b z3-4.4.1 z3-4.4.1 && \
+    python scripts/mk_make.py && \
+    cd build && \
+    make && \
+    make install && \
+    cd ../.. && \
+    rm -rf z3 && \
     cd ~ && \
-	wget -qO- qira.me/dl | unxz | tar x && \
-	cd qira && \
-	sed -i 's/apt-get install/apt-get install -y/g' install.sh && \
-	sed -i 's/apt-get install/apt-get install -y/g' qemu_build.sh && \
-	./install.sh && \
-	wget http://downloads.metasploit.com/data/releases/metasploit-latest-linux-x64-installer.run && \
-	chmod +x metasploit-latest-linux-x64-installer.run && \
-	./metasploit-latest-linux-x64-installer.run --mode unattended --unattendedmodeui none && \
-	rm -f metasploit-latest-linux-x64-installer.run && \
+    git clone https://github.com/BinaryAnalysisPlatform/qira && \
+    git checkout -b stable ac26ea54a7846fa40b131881a91532a3f400a510 && \
+    cd qira && \
+    sed -i 's/apt-get install/apt-get install -y/g' install.sh && \
+    sed -i 's/apt-get install/apt-get install -y/g' qemu_build.sh && \
+    ./install.sh && \
+    wget http://downloads.metasploit.com/data/releases/metasploit-latest-linux-x64-installer.run && \
+    chmod +x metasploit-latest-linux-x64-installer.run && \
+    ./metasploit-latest-linux-x64-installer.run --mode unattended --unattendedmodeui none && \
+    rm -f metasploit-latest-linux-x64-installer.run && \
     git clone https://github.com/longld/peda ~/peda && \
     echo "source ~/peda/peda.py" >> ~/.gdbinit && \
     cd ~ && \
