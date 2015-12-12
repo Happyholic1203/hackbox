@@ -40,8 +40,6 @@ RUN apt-get update && \
     git clone https://github.com/BinaryAnalysisPlatform/qira && \
     cd qira && \
     git checkout -b stable ac26ea54a7846fa40b131881a91532a3f400a510 && \
-    sed -i 's/apt-get install/apt-get install -y/g' install.sh && \
-    sed -i 's/apt-get install/apt-get install -y/g' qemu_build.sh && \
     ./install.sh && \
     wget http://downloads.metasploit.com/data/releases/metasploit-latest-linux-x64-installer.run && \
     chmod +x metasploit-latest-linux-x64-installer.run && \
