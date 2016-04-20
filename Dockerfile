@@ -25,7 +25,7 @@ MAINTAINER Yu-Cheng (Henry) Huang
 RUN apt-get update && \
     apt-get install -y nmap gdb john strace ltrace gcc g++ libc6-dev-i386 \
         ctags gdbserver python-dbg lib32stdc++6 libxml2-dev libxslt1-dev && \
-    pip install pwntools lxml dicttoxml xlsxwriter dnspython slowaes PyPDF2 && \
+    pip install pwntools && \
     cd /tmp && \
     git clone https://github.com/Z3Prover/z3 && \
     cd z3 && \
@@ -55,6 +55,8 @@ RUN apt-get update && \
     rm -f sqlmap.tar.gz && \
     cd /opt && \
     git clone https://bitbucket.org/LaNMaSteR53/recon-ng && \
+    cd recon-ng && \
+    pip install -r REQUIREMENTS && \
     ln -sf /opt/recon-ng/recon-ng /usr/local/bin/recon-ng && \
     cd /tmp && \
     wget http://www.capstone-engine.org/download/3.0.4/ubuntu-14.04/libcapstone3_3.0.4-0.1ubuntu1_amd64.deb && \
