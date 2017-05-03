@@ -25,7 +25,7 @@ MAINTAINER Yu-Cheng (Henry) Huang
 RUN apt-get update && \
     apt-get install -y nmap gdb john strace ltrace gcc g++ libc6-dev-i386 \
         ctags gdbserver python-dbg lib32stdc++6 libxml2-dev libxslt1-dev \
-        libssl-dev nasm && \
+        libssl-dev nasm libboost1.55-dev libpython2.7-dev && \
     pip install pwntools && \
     cd /tmp && \
     git clone https://github.com/Z3Prover/z3 && \
@@ -61,13 +61,27 @@ RUN apt-get update && \
     ln -sf /opt/recon-ng/recon-ng /usr/local/bin/recon-ng && \
     cd /tmp && \
     wget http://www.capstone-engine.org/download/3.0.4/ubuntu-14.04/libcapstone3_3.0.4-0.1ubuntu1_amd64.deb && \
+    wget 'http://www.capstone-engine.org/download/3.0.4/ubuntu-14.04/libcapstone-dev_3.0.4-0.1ubuntu1_amd64.deb' && \
     dpkg -i libcapstone3_3.0.4-0.1ubuntu1_amd64.deb && \
+    dpkg -i libcapstone-dev_3.0.4-0.1ubuntu1_amd64.deb && \
     rm -f libcapstone3_3.0.4-0.1ubuntu1_amd64.deb && \
+    rm -f libcapstone-dev_3.0.4-0.1ubuntu1_amd64.deb && \
+    cd ~ && \
+    wget 'http://software.intel.com/sites/landingpage/pintool/downloads/pin-2.14-71313-gcc.4.4.7-linux.tar.gz' && \
+    tar xvzf pin-2.14-71313-gcc.4.4.7-linux.tar.gz && \
+    cd pin-2.14-71313-gcc.4.4.7-linux/source/tools && \
+    git clone https://github.com/JonathanSalwan/Triton.git && \
+    cd Triton && \
+    mkdir build && \
+    cd build && \
+    cmake -DPINTOOL=on .. && \
+    make && \
     echo "#!/bin/bash" > ~/msfconsole && \
     echo "pass=`sed -n 's/\s*password:\s*\"\([0-9a-z]*\)\"$/\1/p' /opt/metasploit/apps/pro/ui/config/database.yml | sort | uniq`" >> ~/msfconsole && \
     echo 'msf=/opt/metasploit/ctlscript.sh' >> ~/msfconsole && \
     echo '$msf status | grep "already running" || $msf start' >> ~/msfconsole && \
     echo '/usr/local/bin/msfconsole --quiet -x "db_disconnect; db_connect msf3:$pass@localhost:7337/msf3"' >> ~/msfconsole && \
+    echo 'export PATH=$PATH;~/pin-2.14-71313-gcc.4.4.7-linux/source/tools/Triton' >> ~/.bashrc && \
     chmod +x ~/msfconsole && \
     echo "alias msfconsole='~/msfconsole'" >> ~/.bash_aliases
 
