@@ -47,7 +47,8 @@ RUN apt-get update && \
     ./metasploit-latest-linux-x64-installer.run --mode unattended --unattendedmodeui none && \
     rm -f metasploit-latest-linux-x64-installer.run && \
     git clone https://github.com/longld/peda ~/peda && \
-    echo "source ~/peda/peda.py" >> ~/.gdbinit && \
+    git clone https://github.com/scwuaptx/Pwngdb ~/Pwngdb && \
+    cp ~/Pwngdb/.gdbinit ~/ && \
     cd ~ && \
     wget 'https://github.com/sqlmapproject/sqlmap/tarball/master' --output-document=sqlmap.tar.gz && \
     tar -zxvf sqlmap.tar.gz && \
