@@ -7,7 +7,7 @@ MAINTAINER Yu-Cheng (Henry) Huang
 #       - g++
 #       - git
 #       - Vim with lots of plugins
-#       - ctags (for NerdTree)
+#       - ranger
 #   PenTest Tools:
 #       - Metasploit
 #       - sqlmap
@@ -15,9 +15,11 @@ MAINTAINER Yu-Cheng (Henry) Huang
 #       - Recon-ng
 #   Reversing Tools:
 #       - qira
-#       - GDB with Peda
-#   Misc:
+#       - GDB with Peda/symgdb/Pwngdb
+#   Symbolic Execution:
 #       - Z3Prover
+#       - Triton
+#   Misc:
 #       - Tmux
 #       - John the Ripper
 #       - PwnTools
