@@ -104,7 +104,7 @@ RUN apt-get update && \
     tar -zxvf master && \
     mv SQLab-symgdb-* ~/symgdb && \
     pushd ~/symgdb && \
-    ./install && \
+    ./install.sh && \
     echo "source ~/symgdb/symgdb.py" >> ~/.gdbinit && \
     popd && \
     popd && \
