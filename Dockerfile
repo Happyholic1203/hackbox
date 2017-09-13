@@ -82,7 +82,7 @@ RUN apt-get update && \
     echo 'msf=/opt/metasploit/ctlscript.sh' >> ~/msfconsole && \
     echo '$msf status | grep "already running" || $msf start' >> ~/msfconsole && \
     echo '/usr/local/bin/msfconsole --quiet -x "db_disconnect; db_connect msf3:$pass@localhost:7337/msf3"' >> ~/msfconsole && \
-    echo 'export PATH=$PATH;~/pin-2.14-71313-gcc.4.4.7-linux/source/tools/Triton' >> ~/.bashrc && \
+    echo 'export PATH=$PATH:~/pin-2.14-71313-gcc.4.4.7-linux/source/tools/Triton' >> ~/.bashrc && \
     chmod +x ~/msfconsole && \
     echo "alias msfconsole='~/msfconsole'" >> ~/.bash_aliases
 
