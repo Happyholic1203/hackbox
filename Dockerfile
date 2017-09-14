@@ -122,7 +122,7 @@ RUN apt-get update && \
     wget https://github.com/scwuaptx/Pwngdb/tarball/master && \
     tar -zxvf master && \
     rm -f master && \
-    mv scwuaptx-pwngdb-* ~/Pwngdb && \
+    mv scwuaptx-Pwngdb-* ~/Pwngdb && \
     popd && \
     rm -rf $tmp && \
     cp ~/Pwngdb/.gdbinit ~/ && \
@@ -134,8 +134,8 @@ RUN apt-get update && \
     rm -f sqlmap.tar.gz && \
     export tmp=`mktemp -d` && \
     pushd $tmp && \
-    wget https://bitbucket.org/LaNMaSteR53/recon-ng/tarball/master && \
-    tar -zxvf master.tar.gz && \
+    wget https://bitbucket.org/LaNMaSteR53/recon-ng/get/v4.9.2.tar.gz && \
+    tar -zxvf v4.9.2.tar.gz && \
     mv LaNMaSteR53-recon-ng* ~/recon-ng && \
     popd && \
     rm -rf $tmp && \
