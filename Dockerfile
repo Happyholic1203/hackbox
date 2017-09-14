@@ -77,7 +77,7 @@ RUN apt-get update && \
     tar zxvf z3-4.5.0 && \
     mv Z3Prover-z3-* z3 && \
     pushd z3 && \
-    python scripts/mk_make.py && \
+    python scripts/mk_make.py --python && \
     pushd build && \
     make && \
     make install && \
@@ -145,20 +145,26 @@ RUN apt-get update && \
     export tmp=`mktemp -d` && \
     pushd $tmp && \
     wget http://www.capstone-engine.org/download/3.0.4/ubuntu-14.04/libcapstone3_3.0.4-0.1ubuntu1_amd64.deb && \
-    wget 'http://www.capstone-engine.org/download/3.0.4/ubuntu-14.04/libcapstone-dev_3.0.4-0.1ubuntu1_amd64.deb' && \
+    wget http://www.capstone-engine.org/download/3.0.4/ubuntu-14.04/libcapstone-dev_3.0.4-0.1ubuntu1_amd64.deb && \
     dpkg -i libcapstone3_3.0.4-0.1ubuntu1_amd64.deb && \
     dpkg -i libcapstone-dev_3.0.4-0.1ubuntu1_amd64.deb && \
     popd && \
     rm -rf $tmp && \
-    cd ~ && \
+    export tmp=`mktemp -d` && \
+    pushd $tmp && \
     wget http://software.intel.com/sites/landingpage/pintool/downloads/pin-2.14-71313-gcc.4.4.7-linux.tar.gz && \
     tar xvzf pin-2.14-71313-gcc.4.4.7-linux.tar.gz && \
-    mv pin-2.14-71313-gcc.4.4.7-linux pin && \
-    cd pin/source/tools && \
+    mv pin-2.14-71313-gcc.4.4.7-linux ~/pin && \
+    popd && \
+    rm -rf $tmp && \
+    export tmp=`mktemp -d` && \
+    pushd $tmp && \
     wget https://github.com/JonathanSalwan/Triton/tarball/master && \
     tar -zxvf master && \
-    mv JonathanSalwan-Triton-* Triton && \
-    cd Triton && \
+    mv JonathanSalwan-Triton-* ~/pin/source/tool/Triton && \
+    popd && \
+    rm -rf $tmp && \
+    cd ~/pin/source/tool/Triton && \
     mkdir build && \
     cd build && \
     cmake -DPINTOOL=on .. && \
