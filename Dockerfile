@@ -71,6 +71,29 @@ RUN apt-get update && \
     popd && \
     popd && \
     rm -rf $tmp && \
+    export tmp=`mktemp -d` && \
+    pushd $tmp && \
+    wget https://bitbucket.org/LaNMaSteR53/recon-ng/get/v4.9.2.tar.gz && \
+    tar -zxvf v4.9.2.tar.gz && \
+    mv LaNMaSteR53-recon-ng* ~/recon-ng && \
+    popd && \
+    rm -rf $tmp && \
+    pushd ~/recon-ng && \
+    bash -c 'pip install -r REQUIREMENTS || pip install -r REQUIREMENTS || pip install -r REQUIREMENTS' && \
+    ln -sf ~/recon-ng/recon-ng /usr/local/bin/recon-ng && \
+    popd && \
+    export tmp=`mktemp -d` && \
+    pushd $tmp && \
+    wget http://www.capstone-engine.org/download/3.0.4/ubuntu-14.04/libcapstone3_3.0.4-0.1ubuntu1_amd64.deb && \
+    wget http://www.capstone-engine.org/download/3.0.4/ubuntu-14.04/libcapstone-dev_3.0.4-0.1ubuntu1_amd64.deb && \
+    dpkg -i libcapstone3_3.0.4-0.1ubuntu1_amd64.deb && \
+    dpkg -i libcapstone-dev_3.0.4-0.1ubuntu1_amd64.deb && \
+    popd && \
+    rm -rf $tmp && \
+    git clone https://github.com/radare/radare2 && \
+    pushd radare2 && \
+    ./sys/install.sh && \
+    popd && \
     export tmp=$(mktemp -d) && \
     pushd $tmp && \
     wget https://github.com/Z3Prover/z3/tarball/z3-4.5.0 && \
@@ -85,12 +108,16 @@ RUN apt-get update && \
     popd && \
     popd && \
     rm -rf $tmp && \
-    cd ~ && \
+    export tmp=`mktemp -d` && \
+    pushd $tmp && \
     wget https://github.com/BinaryAnalysisPlatform/qira/tarball/ac26ea54a7846fa40b131881a91532a3f400a510 && \
     tar -zxvf ac26ea54a7846fa40b131881a91532a3f400a510 && \
-    mv BinaryAnalysisPlatform-qira-ac26ea5 qira && \
-    cd qira && \
+    mv BinaryAnalysisPlatform-qira-ac26ea5 ~/qira && \
+    popd && \
+    rm -rf $tmp && \
+    pushd ~/qira && \
     ./install.sh && \
+    popd && \
     export tmp=`mktemp -d` && \
     pushd $tmp && \
     wget http://downloads.metasploit.com/data/releases/metasploit-latest-linux-x64-installer.run && \
@@ -132,24 +159,6 @@ RUN apt-get update && \
     mv sqlmapproject-sqlmap-* sqlmap && \
     ln -sf `pwd`/sqlmap/sqlmap.py /usr/local/bin/sqlmap && \
     rm -f sqlmap.tar.gz && \
-    export tmp=`mktemp -d` && \
-    pushd $tmp && \
-    wget https://bitbucket.org/LaNMaSteR53/recon-ng/get/v4.9.2.tar.gz && \
-    tar -zxvf v4.9.2.tar.gz && \
-    mv LaNMaSteR53-recon-ng* ~/recon-ng && \
-    popd && \
-    rm -rf $tmp && \
-    cd ~/recon-ng && \
-    pip install -r REQUIREMENTS && \
-    ln -sf ~/recon-ng/recon-ng /usr/local/bin/recon-ng && \
-    export tmp=`mktemp -d` && \
-    pushd $tmp && \
-    wget http://www.capstone-engine.org/download/3.0.4/ubuntu-14.04/libcapstone3_3.0.4-0.1ubuntu1_amd64.deb && \
-    wget http://www.capstone-engine.org/download/3.0.4/ubuntu-14.04/libcapstone-dev_3.0.4-0.1ubuntu1_amd64.deb && \
-    dpkg -i libcapstone3_3.0.4-0.1ubuntu1_amd64.deb && \
-    dpkg -i libcapstone-dev_3.0.4-0.1ubuntu1_amd64.deb && \
-    popd && \
-    rm -rf $tmp && \
     export tmp=`mktemp -d` && \
     pushd $tmp && \
     wget http://software.intel.com/sites/landingpage/pintool/downloads/pin-2.14-71313-gcc.4.4.7-linux.tar.gz && \
