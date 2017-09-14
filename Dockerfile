@@ -170,10 +170,10 @@ RUN apt-get update && \
     pushd $tmp && \
     wget https://github.com/JonathanSalwan/Triton/tarball/master && \
     tar -zxvf master && \
-    mv JonathanSalwan-Triton-* ~/pin/source/tool/Triton && \
+    mv JonathanSalwan-Triton-* ~/pin/source/tools/Triton && \
     popd && \
     rm -rf $tmp && \
-    cd ~/pin/source/tool/Triton && \
+    cd ~/pin/source/tools/Triton && \
     mkdir build && \
     cd build && \
     cmake -DPINTOOL=on .. && \
