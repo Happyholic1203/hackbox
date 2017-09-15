@@ -199,7 +199,14 @@ RUN apt-get update && \
     chmod +x ~/msfconsole && \
     echo "alias msfconsole='~/msfconsole'" >> ~/.aliases && \
     rm -rf /tmp/* && \
-    rm -rf ~/.cache
+    rm -rf ~/.cache ; \
+    rm -f ~/.bash_history ; \
+    rm -f ~/.config/radare2/history ; \
+    rm -rf ~/.pwntools-cache ; \
+    rm -f ~/.gdb_history ; \
+    rm -f ~/.viminfo ; \
+    rm -f ~/.config/ranger/history ; \
+    rm -f ~/.config/radare2/history
 
 # qira
 EXPOSE 3002 3003 4000
