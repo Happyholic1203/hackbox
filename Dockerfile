@@ -92,6 +92,8 @@ RUN apt-get update && \
     git clone https://github.com/radare/radare2 && \
     pushd radare2 && \
     ./sys/install.sh && \
+    find . -type f -name '*.o' -exec rm -f {} \; && \
+    find . -type f -name '*.a' -exec rm -f {} \; && \
     popd && \
     popd && \
     export tmp=$(mktemp -d) && \
@@ -117,6 +119,8 @@ RUN apt-get update && \
     rm -rf $tmp && \
     pushd ~/qira && \
     ./install.sh && \
+    find ~/qira/tracers/qemu/qemu-2.1.3 -type f -name '*.o' -exec rm -f {} \; && \
+    rm -f ~/qira/tracers/qemu/qemu-2.1.3.tar.bz2 && \
     popd && \
     export tmp=`mktemp -d` && \
     pushd $tmp && \
@@ -132,6 +136,8 @@ RUN apt-get update && \
     mv SQLab-symgdb-* ~/symgdb && \
     pushd ~/symgdb && \
     ./install.sh && \
+    rm -rf ~/symgdb/gdb && \
+    rm -f ~/symgdb/gdb-*.tar.gz && \
     rm -rf /usr/local/share/gdb && \
     cp -r gdb/gdb/data-directory /usr/local/share/gdb && \
     popd && \
@@ -176,11 +182,14 @@ RUN apt-get update && \
     mv JonathanSalwan-Triton-* ~/pin/source/tools/Triton && \
     popd && \
     rm -rf $tmp && \
-    cd ~/pin/source/tools/Triton && \
+    pushd ~/pin/source/tools/Triton && \
     mkdir build && \
-    cd build && \
+    pushd build && \
     cmake -DPINTOOL=on .. && \
     make -j$(grep processor < /proc/cpuinfo | wc -l) install && \
+    popd && \
+    find . -type f -name '*.o' -exec rm -f {} \; && \
+    popd && \
     echo "#!/bin/bash" > ~/msfconsole && \
     echo "pass=`sed -n 's/\s*password:\s*\"\([0-9a-z]*\)\"$/\1/p' /opt/metasploit/apps/pro/ui/config/database.yml | sort | uniq`" >> ~/msfconsole && \
     echo 'msf=/opt/metasploit/ctlscript.sh' >> ~/msfconsole && \
@@ -188,8 +197,9 @@ RUN apt-get update && \
     echo '/usr/local/bin/msfconsole --quiet -x "db_disconnect; db_connect msf3:$pass@localhost:7337/msf3"' >> ~/msfconsole && \
     echo 'export PATH="$PATH:~/pin/source/tools/Triton/build"' >> ~/.bashrc && \
     chmod +x ~/msfconsole && \
-    echo "alias msfconsole='~/msfconsole'" >> ~/.bash_aliases && \
-    rm -rf /tmp/*
+    echo "alias msfconsole='~/msfconsole'" >> ~/.aliases && \
+    rm -rf /tmp/* && \
+    rm -rf ~/.cache
 
 # qira
 EXPOSE 3002 3003 4000
