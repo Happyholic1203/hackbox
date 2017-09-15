@@ -112,8 +112,8 @@ RUN apt-get update && \
     rm -rf $tmp && \
     export tmp=`mktemp -d` && \
     pushd $tmp && \
-    wget https://github.com/BinaryAnalysisPlatform/qira/tarball/ac26ea54a7846fa40b131881a91532a3f400a510 && \
-    tar -zxvf ac26ea54a7846fa40b131881a91532a3f400a510 && \
+    wget https://github.com/BinaryAnalysisPlatform/qira/tarball/2d4cdfb121384f83ea8deec45c73b740687538f9 && \
+    tar -zxvf 2d4cdfb121384f83ea8deec45c73b740687538f9 && \
     mv BinaryAnalysisPlatform-qira-ac26ea5 ~/qira && \
     popd && \
     rm -rf $tmp && \
