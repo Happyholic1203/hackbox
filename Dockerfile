@@ -32,21 +32,17 @@ RUN apt-get update && \
         xz-utils nmap john strace ltrace gcc g++ libc6-dev-i386 \
         gdbserver lib32stdc++6 libxml2-dev libxslt1-dev libssl-dev nasm \
         libboost1.55-dev libpython2.7-dev && \
-    export tmp=`mktemp -d` && \
-    pushd $tmp && \
-	wget https://github.com/Happyholic1203/dotfiles/tarball/master && \
-    tar -zxvf master && \
-    mv Happyholic1203-dotfiles-* ~/dotfiles && \
-	pushd ~/dotfiles && \
-	chmod +x ./install.sh && \
-	./install.sh --with-ycm --with-ranger && \
-	echo "#!/bin/bash" >> ~/init && \
-	echo "TERM=xterm-256color tmux" >> ~/init && \
-	echo "bash" >> ~/init && \
-	chmod +x ~/init && \
+    pushd ~ && \
+    git clone https://github.com/Happyholic1203/dotfiles && \
+    pushd ~/dotfiles && \
+    chmod +x ./install.sh && \
+    ./install.sh --with-ycm --with-ranger && \
+    echo "#!/bin/bash" > ~/init && \
+    echo "TERM=xterm-256color tmux" >> ~/init && \
+    echo "bash" >> ~/init && \
+    chmod +x ~/init && \
     popd && \
     popd && \
-    rm -rf $tmp && \
     pip install --upgrade pip && \
     pip install pwntools && \
     export tmp=$(mktemp -d) && \
@@ -68,6 +64,8 @@ RUN apt-get update && \
                 --prefix=/usr/local && \
     make VIMRUNTIMEDIR=/usr/local/share/vim/vim80 && \
     make install && \
+    rm -f /usr/bin/vi && \
+    ln -sf `which vim` /usr/bin/vi && \
     popd && \
     popd && \
     rm -rf $tmp && \
@@ -90,9 +88,11 @@ RUN apt-get update && \
     dpkg -i libcapstone-dev_3.0.4-0.1ubuntu1_amd64.deb && \
     popd && \
     rm -rf $tmp && \
+    pushd ~ && \
     git clone https://github.com/radare/radare2 && \
     pushd radare2 && \
     ./sys/install.sh && \
+    popd && \
     popd && \
     export tmp=$(mktemp -d) && \
     pushd $tmp && \
@@ -132,7 +132,8 @@ RUN apt-get update && \
     mv SQLab-symgdb-* ~/symgdb && \
     pushd ~/symgdb && \
     ./install.sh && \
-    echo "source ~/symgdb/symgdb.py" >> ~/.gdbinit && \
+    rm -rf /usr/local/share/gdb && \
+    cp -r gdb/gdb/data-directory /usr/local/share/gdb && \
     popd && \
     popd && \
     rm -rf $tmp && \
@@ -150,9 +151,11 @@ RUN apt-get update && \
     tar -zxvf master && \
     rm -f master && \
     mv scwuaptx-Pwngdb-* ~/Pwngdb && \
+    sed -i '1s/^/from __future__ import print_function\n/g' ~/Pwngdb/pwngdb.py && \
     popd && \
     rm -rf $tmp && \
     cp ~/Pwngdb/.gdbinit ~/ && \
+    echo "source ~/symgdb/symgdb.py" >> ~/.gdbinit && \
     cd ~ && \
     wget https://github.com/sqlmapproject/sqlmap/tarball/master --output-document=sqlmap.tar.gz && \
     tar -zxvf sqlmap.tar.gz && \
@@ -185,7 +188,8 @@ RUN apt-get update && \
     echo '/usr/local/bin/msfconsole --quiet -x "db_disconnect; db_connect msf3:$pass@localhost:7337/msf3"' >> ~/msfconsole && \
     echo 'export PATH="$PATH:~/pin/source/tools/Triton/build"' >> ~/.bashrc && \
     chmod +x ~/msfconsole && \
-    echo "alias msfconsole='~/msfconsole'" >> ~/.bash_aliases
+    echo "alias msfconsole='~/msfconsole'" >> ~/.bash_aliases && \
+    rm -rf /tmp/*
 
 # qira
 EXPOSE 3002 3003 4000
