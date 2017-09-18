@@ -153,7 +153,7 @@ RUN apt-get update && \
     rm -rf $tmp && \
     export tmp=`mktemp -d` && \
     pushd $tmp && \
-    wget https://github.com/scwuaptx/Pwngdb/tarball/master && \
+    wget https://github.com/Happyholic1203/Pwngdb/tarball/master && \
     tar -zxvf master && \
     rm -f master && \
     mv scwuaptx-Pwngdb-* ~/Pwngdb && \
