@@ -156,8 +156,7 @@ RUN apt-get update && \
     wget https://github.com/Happyholic1203/Pwngdb/tarball/master && \
     tar -zxvf master && \
     rm -f master && \
-    mv scwuaptx-Pwngdb-* ~/Pwngdb && \
-    sed -i '1s/^/from __future__ import print_function\n/g' ~/Pwngdb/pwngdb.py && \
+    mv Happyholic1203-Pwngdb-* ~/Pwngdb && \
     popd && \
     rm -rf $tmp && \
     cp ~/Pwngdb/.gdbinit ~/ && \
