@@ -44,7 +44,7 @@ RUN dpkg --add-architecture i386 && \
     chmod +x ~/init && \
     popd && \
     popd && \
-    pip install --upgrade pip && \
+    pip install --upgrade pip setuptools && \
     pip install --upgrade ipython && \
     pip install pwntools && \
     export tmp=$(mktemp -d) && \
