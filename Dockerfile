@@ -32,7 +32,7 @@ RUN dpkg --add-architecture i386 && \
         python-pip python-dev build-essential cmake unzip \
         xz-utils nmap john strace ltrace gcc g++ libc6-dev-i386 \
         gdbserver lib32stdc++6 libxml2-dev libxslt1-dev libssl-dev nasm \
-        libboost1.55-dev libpython2.7-dev libc6-dbg libc6-dbg:i386 && \
+        libboost1.58-dev libpython2.7-dev libc6-dbg libc6-dbg:i386 && \
     pushd ~ && \
     git clone https://github.com/Happyholic1203/dotfiles && \
     pushd ~/dotfiles && \
@@ -44,7 +44,7 @@ RUN dpkg --add-architecture i386 && \
     chmod +x ~/init && \
     popd && \
     popd && \
-    pip install --upgrade pip setuptools && \
+    pip install --upgrade setuptools && \
     pip install ipython==5.7.0 && \
     pip install pwntools && \
     export tmp=$(mktemp -d) && \
