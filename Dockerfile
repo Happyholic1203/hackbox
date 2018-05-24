@@ -116,7 +116,7 @@ RUN dpkg --add-architecture i386 && \
     pushd $tmp && \
     wget https://github.com/BinaryAnalysisPlatform/qira/tarball/2d4cdfb121384f83ea8deec45c73b740687538f9 && \
     tar -zxvf 2d4cdfb121384f83ea8deec45c73b740687538f9 && \
-    mv BinaryAnalysisPlatform-qira-ac26ea5 ~/qira && \
+    mv geohot-qira-* ~/qira && \
     popd && \
     rm -rf $tmp && \
     pushd ~/qira && \
