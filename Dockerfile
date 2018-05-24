@@ -26,12 +26,13 @@ MAINTAINER Yu-Cheng (Henry) Huang
 
 SHELL ["/bin/bash", "-c"]
 
-RUN apt-get update && \
+RUN dpkg --add-architecture i386 && \
+    apt-get update && \
     apt-get install -y man git git-core tmux bash-completion curl wget \
         python-pip python-dev build-essential ipython cmake unzip \
         xz-utils nmap john strace ltrace gcc g++ libc6-dev-i386 \
         gdbserver lib32stdc++6 libxml2-dev libxslt1-dev libssl-dev nasm \
-        libboost1.55-dev libpython2.7-dev && \
+        libboost1.55-dev libpython2.7-dev libc6-dbg libc6-dbg:i386 && \
     pushd ~ && \
     git clone https://github.com/Happyholic1203/dotfiles && \
     pushd ~/dotfiles && \
@@ -44,6 +45,7 @@ RUN apt-get update && \
     popd && \
     popd && \
     pip install --upgrade pip && \
+    pip install --upgrade ipython && \
     pip install pwntools && \
     export tmp=$(mktemp -d) && \
     pushd $tmp && \
