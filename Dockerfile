@@ -29,7 +29,7 @@ SHELL ["/bin/bash", "-c"]
 RUN dpkg --add-architecture i386 && \
     apt-get update && \
     apt-get install -y man git git-core tmux bash-completion curl wget \
-        python-pip python-dev build-essential ipython cmake unzip \
+        python-pip python-dev build-essential cmake unzip \
         xz-utils nmap john strace ltrace gcc g++ libc6-dev-i386 \
         gdbserver lib32stdc++6 libxml2-dev libxslt1-dev libssl-dev nasm \
         libboost1.55-dev libpython2.7-dev libc6-dbg libc6-dbg:i386 && \
@@ -45,7 +45,7 @@ RUN dpkg --add-architecture i386 && \
     popd && \
     popd && \
     pip install --upgrade pip setuptools && \
-    pip install --upgrade ipython && \
+    pip install ipython==5.7.0 && \
     pip install pwntools && \
     export tmp=$(mktemp -d) && \
     pushd $tmp && \
