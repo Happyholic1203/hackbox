@@ -121,31 +121,35 @@ RUN dpkg --add-architecture i386 && \
     rm -rf $tmp && \
     pushd ~/qira && \
     ./install.sh && \
-    find ~/qira/tracers/qemu/qemu-2.1.3 -type f -name '*.o' -exec rm -f {} \; && \
-    rm -f ~/qira/tracers/qemu/qemu-2.1.3.tar.bz2 && \
-    popd && \
-    export tmp=`mktemp -d` && \
+    find ~/qira/tracers/qemu/qemu-2.1.3 -type f -name '*.o' -exec rm -f {} \; ; \
+    rm -f ~/qira/tracers/qemu/qemu-2.1.3.tar.bz2 ; \
+    popd
+
+RUN export tmp=`mktemp -d` && \
     pushd $tmp && \
     wget http://downloads.metasploit.com/data/releases/metasploit-latest-linux-x64-installer.run && \
     chmod +x metasploit-latest-linux-x64-installer.run && \
     ./metasploit-latest-linux-x64-installer.run --mode unattended --unattendedmodeui none && \
     popd && \
-    rm -rf $tmp && \
-    export tmp=`mktemp -d` && \
-    pushd $tmp && \
-    wget https://github.com/SQLab/symgdb/tarball/master && \
-    tar -zxvf master && \
-    mv SQLab-symgdb-* ~/symgdb && \
-    pushd ~/symgdb && \
-    ./install.sh && \
-    rm -rf ~/symgdb/gdb && \
-    rm -f ~/symgdb/gdb-*.tar.gz && \
-    rm -rf /usr/local/share/gdb && \
-    cp -r gdb/gdb/data-directory /usr/local/share/gdb && \
-    popd && \
-    popd && \
-    rm -rf $tmp && \
-    export tmp=`mktemp -d` && \
+    rm -rf $tmp
+
+    # export tmp=`mktemp -d` && \
+    # pushd $tmp && \
+    # wget https://github.com/SQLab/symgdb/tarball/master && \
+    # tar -zxvf master && \
+    # mv SQLab-symgdb-* ~/symgdb && \
+    # pushd ~/symgdb && \
+    # ./install.sh && \
+    # rm -rf ~/symgdb/gdb && \
+    # rm -f ~/symgdb/gdb-*.tar.gz && \
+    # rm -rf /usr/local/share/gdb && \
+    # cp -r gdb/gdb/data-directory /usr/local/share/gdb && \
+    # popd && \
+    # popd && \
+    # rm -rf $tmp && \
+    # echo "source ~/symgdb/symgdb.py" >> ~/.gdbinit && \
+
+RUN export tmp=`mktemp -d` && \
     pushd $tmp && \
     wget https://github.com/longld/peda/tarball/master && \
     tar -zxvf master && \
@@ -161,15 +165,16 @@ RUN dpkg --add-architecture i386 && \
     mv Happyholic1203-Pwngdb-* ~/Pwngdb && \
     popd && \
     rm -rf $tmp && \
-    cp ~/Pwngdb/.gdbinit ~/ && \
-    echo "source ~/symgdb/symgdb.py" >> ~/.gdbinit && \
-    cd ~ && \
+    cp ~/Pwngdb/.gdbinit ~/
+
+RUN cd ~ && \
     wget https://github.com/sqlmapproject/sqlmap/tarball/master --output-document=sqlmap.tar.gz && \
     tar -zxvf sqlmap.tar.gz && \
     mv sqlmapproject-sqlmap-* sqlmap && \
     ln -sf `pwd`/sqlmap/sqlmap.py /usr/local/bin/sqlmap && \
-    rm -f sqlmap.tar.gz && \
-    export tmp=`mktemp -d` && \
+    rm -f sqlmap.tar.gz
+
+RUN export tmp=`mktemp -d` && \
     pushd $tmp && \
     wget http://software.intel.com/sites/landingpage/pintool/downloads/pin-2.14-71313-gcc.4.4.7-linux.tar.gz && \
     tar xvzf pin-2.14-71313-gcc.4.4.7-linux.tar.gz && \
@@ -190,8 +195,9 @@ RUN dpkg --add-architecture i386 && \
     make -j$(grep processor < /proc/cpuinfo | wc -l) install && \
     popd && \
     find . -type f -name '*.o' -exec rm -f {} \; && \
-    popd && \
-    echo "#!/bin/bash" > ~/msfconsole && \
+    popd
+
+RUN echo "#!/bin/bash" > ~/msfconsole && \
     echo "pass=`sed -n 's/\s*password:\s*\"\([0-9a-z]*\)\"$/\1/p' /opt/metasploit/apps/pro/ui/config/database.yml | sort | uniq`" >> ~/msfconsole && \
     echo 'msf=/opt/metasploit/ctlscript.sh' >> ~/msfconsole && \
     echo '$msf status | grep "already running" || $msf start' >> ~/msfconsole && \
@@ -208,6 +214,8 @@ RUN dpkg --add-architecture i386 && \
     rm -f ~/.viminfo ; \
     rm -f ~/.config/ranger/history ; \
     rm -f ~/.config/radare2/history
+
+# TODO: add one_gadget
 
 # qira
 EXPOSE 3002 3003 4000
