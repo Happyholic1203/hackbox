@@ -13,16 +13,18 @@ MAINTAINER Yu-Cheng (Henry) Huang
 #       - sqlmap
 #       - nmap
 #       - Recon-ng
-#   Reversing Tools:
+#   Reversing/Pwn Tools:
 #       - qira
 #       - GDB with Peda/symgdb/Pwngdb
+#       - PwnTools
+#       - one_gadget
 #   Symbolic Execution:
 #       - Z3Prover
 #       - Triton
 #   Misc:
 #       - Tmux
 #       - John the Ripper
-#       - PwnTools
+#       - binwalk
 
 SHELL ["/bin/bash", "-c"]
 
@@ -32,8 +34,9 @@ RUN dpkg --add-architecture i386 && \
         python-pip python-dev build-essential cmake unzip \
         xz-utils nmap john strace ltrace gcc g++ libc6-dev-i386 \
         gdbserver lib32stdc++6 libxml2-dev libxslt1-dev libssl-dev nasm \
-        libboost1.58-dev libpython2.7-dev libc6-dbg libc6-dbg:i386 sudo && \
-    pushd ~ && \
+        libboost1.58-dev libpython2.7-dev libc6-dbg libc6-dbg:i386 sudo
+
+RUN pushd ~ && \
     git clone https://github.com/Happyholic1203/dotfiles && \
     pushd ~/dotfiles && \
     chmod +x ./install.sh && \
@@ -43,11 +46,14 @@ RUN dpkg --add-architecture i386 && \
     echo "bash" >> ~/init && \
     chmod +x ~/init && \
     popd && \
-    popd && \
-    pip install --upgrade setuptools && \
+    popd
+
+RUN pip install --upgrade setuptools && \
     pip install ipython==5.7.0 && \
     pip install pwntools && \
-    export tmp=$(mktemp -d) && \
+    rm -rf ~/.cache/pip
+
+RUN export tmp=$(mktemp -d) && \
     pushd $tmp && \
     wget https://github.com/vim/vim/archive/v8.0.1098.zip && \
     unzip v8.0.1098.zip && \
@@ -70,11 +76,12 @@ RUN dpkg --add-architecture i386 && \
     ln -sf `which vim` /usr/bin/vi && \
     popd && \
     popd && \
-    rm -rf $tmp && \
-    export tmp=`mktemp -d` && \
+    rm -rf $tmp
+
+RUN export tmp=`mktemp -d` && \
     pushd $tmp && \
-    wget https://bitbucket.org/LaNMaSteR53/recon-ng/get/v4.9.2.tar.gz && \
-    tar -zxvf v4.9.2.tar.gz && \
+    wget https://bitbucket.org/LaNMaSteR53/recon-ng/get/v4.9.3.tar.gz && \
+    tar -zxvf v4.9.3.tar.gz && \
     mv LaNMaSteR53-recon-ng* ~/recon-ng && \
     popd && \
     rm -rf $tmp && \
@@ -82,23 +89,27 @@ RUN dpkg --add-architecture i386 && \
     bash -c 'pip install -r REQUIREMENTS || pip install -r REQUIREMENTS || pip install -r REQUIREMENTS' && \
     ln -sf ~/recon-ng/recon-ng /usr/local/bin/recon-ng && \
     popd && \
-    export tmp=`mktemp -d` && \
+    rm -rf ~/.cache/pip
+
+RUN export tmp=`mktemp -d` && \
     pushd $tmp && \
     wget http://www.capstone-engine.org/download/3.0.4/ubuntu-14.04/libcapstone3_3.0.4-0.1ubuntu1_amd64.deb && \
     wget http://www.capstone-engine.org/download/3.0.4/ubuntu-14.04/libcapstone-dev_3.0.4-0.1ubuntu1_amd64.deb && \
     dpkg -i libcapstone3_3.0.4-0.1ubuntu1_amd64.deb && \
     dpkg -i libcapstone-dev_3.0.4-0.1ubuntu1_amd64.deb && \
     popd && \
-    rm -rf $tmp && \
-    pushd ~ && \
+    rm -rf $tmp
+
+RUN pushd ~ && \
     git clone https://github.com/radare/radare2 && \
     pushd radare2 && \
     ./sys/install.sh && \
     find . -type f -name '*.o' -exec rm -f {} \; && \
     find . -type f -name '*.a' -exec rm -f {} \; && \
     popd && \
-    popd && \
-    export tmp=$(mktemp -d) && \
+    popd
+
+RUN export tmp=$(mktemp -d) && \
     pushd $tmp && \
     wget https://github.com/Z3Prover/z3/tarball/z3-4.5.0 && \
     tar zxvf z3-4.5.0 && \
@@ -111,10 +122,11 @@ RUN dpkg --add-architecture i386 && \
     popd && \
     popd && \
     popd && \
-    rm -rf $tmp && \
-    export tmp=`mktemp -d` && \
+    rm -rf $tmp
+
+RUN export tmp=`mktemp -d` && \
     pushd $tmp && \
-    wget https://github.com/BinaryAnalysisPlatform/qira/tarball/2d4cdfb121384f83ea8deec45c73b740687538f9 && \
+    wget https://github.com/geohot/qira/tarball/2d4cdfb121384f83ea8deec45c73b740687538f9 && \
     tar -zxvf 2d4cdfb121384f83ea8deec45c73b740687538f9 && \
     mv geohot-qira-* ~/qira && \
     popd && \
@@ -133,39 +145,22 @@ RUN export tmp=`mktemp -d` && \
     popd && \
     rm -rf $tmp
 
-    # export tmp=`mktemp -d` && \
-    # pushd $tmp && \
-    # wget https://github.com/SQLab/symgdb/tarball/master && \
-    # tar -zxvf master && \
-    # mv SQLab-symgdb-* ~/symgdb && \
-    # pushd ~/symgdb && \
-    # ./install.sh && \
-    # rm -rf ~/symgdb/gdb && \
-    # rm -f ~/symgdb/gdb-*.tar.gz && \
-    # rm -rf /usr/local/share/gdb && \
-    # cp -r gdb/gdb/data-directory /usr/local/share/gdb && \
-    # popd && \
-    # popd && \
-    # rm -rf $tmp && \
-    # echo "source ~/symgdb/symgdb.py" >> ~/.gdbinit && \
+RUN cd ~ && \
+    git clone https://github.com/longld/peda
 
-RUN export tmp=`mktemp -d` && \
-    pushd $tmp && \
-    wget https://github.com/longld/peda/tarball/master && \
-    tar -zxvf master && \
-    rm -f master && \
-    mv longld-peda-* ~/peda && \
-    popd && \
-    rm -rf $tmp && \
-    export tmp=`mktemp -d` && \
-    pushd $tmp && \
-    wget https://github.com/Happyholic1203/Pwngdb/tarball/master && \
-    tar -zxvf master && \
-    rm -f master && \
-    mv Happyholic1203-Pwngdb-* ~/Pwngdb && \
-    popd && \
-    rm -rf $tmp && \
+RUN cd ~ && \
+    git clone https://github.com/Happyholic1203/Pwngdb && \
     cp ~/Pwngdb/.gdbinit ~/
+
+RUN cd ~ && \
+    git clone https://github.com/SQLab/symgdb && \
+    cd ~/symgdb && \
+    ./install.sh && \
+    rm -rf ~/symgdb/gdb ; \
+    rm -f ~/symgdb/gdb-*.tar.gz ; \
+    rm -rf /usr/local/share/gdb ; \
+    cp -r gdb/gdb/data-directory /usr/local/share/gdb && \
+    echo "source ~/symgdb/symgdb.py" >> ~/.gdbinit
 
 RUN cd ~ && \
     wget https://github.com/sqlmapproject/sqlmap/tarball/master --output-document=sqlmap.tar.gz && \
@@ -180,8 +175,9 @@ RUN export tmp=`mktemp -d` && \
     tar xvzf pin-2.14-71313-gcc.4.4.7-linux.tar.gz && \
     mv pin-2.14-71313-gcc.4.4.7-linux ~/pin && \
     popd && \
-    rm -rf $tmp && \
-    export tmp=`mktemp -d` && \
+    rm -rf $tmp
+
+RUN export tmp=`mktemp -d` && \
     pushd $tmp && \
     wget https://github.com/JonathanSalwan/Triton/tarball/master && \
     tar -zxvf master && \
@@ -214,8 +210,6 @@ RUN echo "#!/bin/bash" > ~/msfconsole && \
     rm -f ~/.viminfo ; \
     rm -f ~/.config/ranger/history ; \
     rm -f ~/.config/radare2/history
-
-# TODO: add one_gadget
 
 # qira
 EXPOSE 3002 3003 4000
