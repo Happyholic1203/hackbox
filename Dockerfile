@@ -152,23 +152,6 @@ RUN cd ~ && \
     git clone https://github.com/Happyholic1203/Pwngdb && \
     cp ~/Pwngdb/.gdbinit ~/
 
-RUN cd ~ && \
-    git clone https://github.com/SQLab/symgdb && \
-    cd ~/symgdb && \
-    ./install.sh && \
-    rm -rf ~/symgdb/gdb ; \
-    rm -f ~/symgdb/gdb-*.tar.gz ; \
-    rm -rf /usr/local/share/gdb ; \
-    cp -r gdb/gdb/data-directory /usr/local/share/gdb && \
-    echo "source ~/symgdb/symgdb.py" >> ~/.gdbinit
-
-RUN cd ~ && \
-    wget https://github.com/sqlmapproject/sqlmap/tarball/master --output-document=sqlmap.tar.gz && \
-    tar -zxvf sqlmap.tar.gz && \
-    mv sqlmapproject-sqlmap-* sqlmap && \
-    ln -sf `pwd`/sqlmap/sqlmap.py /usr/local/bin/sqlmap && \
-    rm -f sqlmap.tar.gz
-
 RUN export tmp=`mktemp -d` && \
     pushd $tmp && \
     wget http://software.intel.com/sites/landingpage/pintool/downloads/pin-2.14-71313-gcc.4.4.7-linux.tar.gz && \
@@ -193,12 +176,46 @@ RUN export tmp=`mktemp -d` && \
     find . -type f -name '*.o' -exec rm -f {} \; && \
     popd
 
+RUN cd ~ && \
+    git clone https://github.com/SQLab/symgdb && \
+    cd ~/symgdb && \
+    ./install.sh && \
+    rm -rf /usr/local/share/gdb ; \
+    cp -r gdb/gdb/data-directory /usr/local/share/gdb && \
+    rm -rf ~/symgdb/gdb ; \
+    rm -f ~/symgdb/gdb-*.tar.gz ; \
+    echo "source ~/symgdb/symgdb.py" >> ~/.gdbinit
+
+RUN cd ~ && \
+    wget https://github.com/sqlmapproject/sqlmap/tarball/master --output-document=sqlmap.tar.gz && \
+    tar -zxvf sqlmap.tar.gz && \
+    mv sqlmapproject-sqlmap-* sqlmap && \
+    ln -sf `pwd`/sqlmap/sqlmap.py /usr/local/bin/sqlmap && \
+    rm -f sqlmap.tar.gz
+
+RUN apt-get update && \
+    apt-get install -y ruby-dev && \
+    command curl -sSL https://rvm.io/mpapis.asc | gpg --import - && \
+    \curl -sSL https://get.rvm.io | bash -s stable --ruby && \
+    source /usr/local/rvm/scripts/rvm && \
+    echo 'source /etc/profile.d/rvm.sh' >> ~/.bashrc_custom && \
+    gem install one_gadget
+
+RUN export tmp=$(mktemp -d) && \
+    pushd $tmp && \
+    wget https://github.com/ReFirmLabs/binwalk/archive/v2.1.1.tar.gz && \
+    tar -zxvf v2.1.1.tar.gz && \
+    cd binwalk-* && \
+    python setup.py install && \
+    popd && \
+    rm -rf $tmp
+
 RUN echo "#!/bin/bash" > ~/msfconsole && \
     echo "pass=`sed -n 's/\s*password:\s*\"\([0-9a-z]*\)\"$/\1/p' /opt/metasploit/apps/pro/ui/config/database.yml | sort | uniq`" >> ~/msfconsole && \
     echo 'msf=/opt/metasploit/ctlscript.sh' >> ~/msfconsole && \
     echo '$msf status | grep "already running" || $msf start' >> ~/msfconsole && \
     echo '/usr/local/bin/msfconsole --quiet -x "db_disconnect; db_connect msf3:$pass@localhost:7337/msf3"' >> ~/msfconsole && \
-    echo 'export PATH="$PATH:~/pin/source/tools/Triton/build"' > ~/.bashrc_custom && \
+    echo 'export PATH="$PATH:~/pin/source/tools/Triton/build"' >> ~/.bashrc_custom && \
     chmod +x ~/msfconsole && \
     echo "alias msfconsole='~/msfconsole'" >> ~/.aliases && \
     rm -rf /tmp/* && \
@@ -209,7 +226,9 @@ RUN echo "#!/bin/bash" > ~/msfconsole && \
     rm -f ~/.gdb_history ; \
     rm -f ~/.viminfo ; \
     rm -f ~/.config/ranger/history ; \
-    rm -f ~/.config/radare2/history
+    rm -f ~/.config/radare2/history; \
+    ipython profile create && \
+    sed -i "s/.*\(c\.TerminalInteractiveShell\.editing_mode\).*/\1 = 'vi'/g" ~/.ipython/profile_default/ipython_config.py
 
 # qira
 EXPOSE 3002 3003 4000
