@@ -18,6 +18,7 @@ MAINTAINER Yu-Cheng (Henry) Huang
 #       - GDB with Peda/symgdb/Pwngdb
 #       - PwnTools
 #       - one_gadget
+#       - qemu
 #   Symbolic Execution:
 #       - Z3Prover
 #       - Triton
@@ -25,6 +26,7 @@ MAINTAINER Yu-Cheng (Henry) Huang
 #       - Tmux
 #       - John the Ripper
 #       - binwalk
+#       - netcat
 
 SHELL ["/bin/bash", "-c"]
 
@@ -35,7 +37,7 @@ RUN dpkg --add-architecture i386 && \
         xz-utils nmap john strace ltrace gcc g++ libc6-dev-i386 \
         gdbserver lib32stdc++6 libxml2-dev libxslt1-dev libssl-dev nasm \
         libboost1.58-dev libpython2.7-dev libc6-dbg libc6-dbg:i386 sudo \
-        net-tools dnsutils iputils-ping netcat
+        net-tools dnsutils iputils-ping netcat qemu
 
 RUN pushd ~ && \
     git clone https://github.com/Happyholic1203/dotfiles && \
