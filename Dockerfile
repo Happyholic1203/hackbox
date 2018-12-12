@@ -37,7 +37,8 @@ RUN dpkg --add-architecture i386 && \
         xz-utils nmap john strace ltrace gcc g++ libc6-dev-i386 \
         gdbserver lib32stdc++6 libxml2-dev libxslt1-dev libssl-dev nasm \
         libboost1.58-dev libpython2.7-dev libc6-dbg libc6-dbg:i386 sudo \
-        net-tools dnsutils iputils-ping netcat qemu
+        net-tools dnsutils iputils-ping netcat binutils gcc-multilib \
+        g++-multilib qemu
 
 RUN pushd ~ && \
     git clone https://github.com/Happyholic1203/dotfiles && \
@@ -54,7 +55,10 @@ RUN pushd ~ && \
 RUN pip install --upgrade setuptools && \
     pip install ipython==5.7.0 && \
     pip install pwntools && \
-    rm -rf ~/.cache/pip
+    pip install ropgadget && \
+    rm -rf ~/.cache/pip && \
+    cd ~ && \
+    git clone https://github.com/JonathanSalwan/ROPgadget
 
 RUN export tmp=$(mktemp -d) && \
     pushd $tmp && \
@@ -187,7 +191,8 @@ RUN cd ~ && \
     cp -r gdb/gdb/data-directory /usr/local/share/gdb && \
     rm -rf ~/symgdb/gdb ; \
     rm -f ~/symgdb/gdb-*.tar.gz ; \
-    echo "source ~/symgdb/symgdb.py" >> ~/.gdbinit
+    echo "source ~/symgdb/symgdb.py" >> ~/.gdbinit ; \
+    echo "set debug-file-directory /usr/lib/debug" >> ~/.gdbinit
 
 RUN cd ~ && \
     wget https://github.com/sqlmapproject/sqlmap/tarball/master --output-document=sqlmap.tar.gz && \
