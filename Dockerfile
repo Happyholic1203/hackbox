@@ -204,6 +204,7 @@ RUN cd ~ && \
 RUN apt-get update && \
     apt-get install -y ruby-dev && \
     command curl -sSL https://rvm.io/mpapis.asc | gpg --import - && \
+    command curl -sSL https://rvm.io/pkuczynski.asc | gpg --import - && \
     \curl -sSL https://get.rvm.io | bash -s stable --ruby && \
     source /usr/local/rvm/scripts/rvm && \
     echo 'source /etc/profile.d/rvm.sh' >> ~/.bashrc_custom && \
