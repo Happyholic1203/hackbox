@@ -11,7 +11,7 @@ RUN dpkg --add-architecture i386 && \
         gdbserver lib32stdc++6 libxml2-dev libxslt1-dev libssl-dev nasm \
         libboost1.58-dev libpython2.7-dev libc6-dbg libc6-dbg:i386 sudo \
         net-tools dnsutils iputils-ping netcat binutils gcc-multilib \
-        g++-multilib qemu gdb libcapstone3 libcapstone-dev ruby-dev && \
+        g++-multilib qemu gdb libcapstone3 libcapstone-dev ruby-dev socat && \
     rm -f /var/lib/apt/lists/*; rm -rf /tmp/*; rm -rf ~/.cache
 
 RUN pip install --upgrade pip setuptools && \
