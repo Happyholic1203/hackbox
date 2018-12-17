@@ -1,5 +1,5 @@
 #!/bin/bash
 
-version=0.2.1
+version=0.2.2
 
 docker build -t happyholic1203/hackbox:$version .
