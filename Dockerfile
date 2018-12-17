@@ -1,33 +1,6 @@
 FROM ubuntu:xenial
 MAINTAINER Yu-Cheng (Henry) Huang
 
-# Installed Packages:
-#   Essentials:
-#       - gcc
-#       - g++
-#       - git
-#       - Vim with lots of plugins
-#       - ranger
-#   PenTest Tools:
-#       - Metasploit
-#       - sqlmap
-#       - nmap
-#       - Recon-ng
-#   Reversing/Pwn Tools:
-#       - qira
-#       - GDB with Peda/Pwngdb
-#       - PwnTools
-#       - one_gadget
-#       - qemu
-#   Symbolic Execution:
-#       - Z3Prover
-#       - Triton
-#   Misc:
-#       - Tmux
-#       - John the Ripper
-#       - binwalk
-#       - netcat
-
 SHELL ["/bin/bash", "-c"]
 
 RUN dpkg --add-architecture i386 && \
@@ -195,9 +168,7 @@ RUN cd ~ && \
     rm -f sqlmap.tar.gz && \
     rm -f /var/lib/apt/lists/*; rm -rf /tmp/*; rm -rf ~/.cache
 
-RUN apt-get update && \
-    apt-get install -y ruby-dev && \
-    command curl -sSL https://rvm.io/mpapis.asc | gpg --import - && \
+RUN command curl -sSL https://rvm.io/mpapis.asc | gpg --import - && \
     command curl -sSL https://rvm.io/pkuczynski.asc | gpg --import - && \
     \curl -sSL https://get.rvm.io | bash -s stable --ruby && \
     source /usr/local/rvm/scripts/rvm && \
