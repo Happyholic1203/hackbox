@@ -15,11 +15,10 @@ RUN dpkg --add-architecture i386 && \
     rm -f /var/lib/apt/lists/*; rm -rf /tmp/*; rm -rf ~/.cache
 
 RUN pip install --upgrade pip setuptools && \
-    pip install --upgrade ipython && \
-    pip install --upgrade pwntools && \
-    pip install --upgrade ipython && \
-    pip install --upgrade ropgadget && \
-    pip3 install --upgrade setuptools && \
+    pip3 install --upgrde setuptools && \
+    rm -f /var/lib/apt/lists/*; rm -rf /tmp/*; rm -rf ~/.cache
+
+RUN pip install --upgrade ipython pwntools ipython ropgadget && \
     pip3 install --upgrade ipython && \
     rm -f /var/lib/apt/lists/*; rm -rf /tmp/*; rm -rf ~/.cache
 
@@ -111,8 +110,8 @@ RUN export tmp=$(mktemp -d) && \
 
 RUN export tmp=`mktemp -d` && \
     pushd $tmp && \
-    wget https://github.com/Happyholic1203/qira/tarball/09c65a5c26fd0aab2e9997e6e17e720af7c280be && \
-    tar -zxvf 09c65a5c26fd0aab2e9997e6e17e720af7c280be && \
+    wget https://github.com/Happyholic1203/qira/tarball/b9ad94a9da1b58157e8bd4576607fcc18d0e0b1b && \
+    tar -zxvf b9ad94a9da1b58157e8bd4576607fcc18d0e0b1b && \
     mv *-qira-* ~/qira && \
     popd && \
     rm -rf $tmp && \
