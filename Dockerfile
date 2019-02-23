@@ -11,7 +11,8 @@ RUN dpkg --add-architecture i386 && \
         gdbserver lib32stdc++6 libxml2-dev libxslt1-dev libssl-dev nasm \
         libboost1.58-dev libpython2.7-dev libc6-dbg libc6-dbg:i386 sudo \
         net-tools dnsutils iputils-ping netcat binutils gcc-multilib \
-        g++-multilib qemu gdb libcapstone3 libcapstone-dev ruby-dev socat && \
+        g++-multilib qemu gdb libcapstone3 libcapstone-dev ruby-dev socat \
+        whatweb p7zip-full && \
     rm -f /var/lib/apt/lists/*; rm -rf /tmp/*; rm -rf ~/.cache
 
 RUN pip install --upgrade pip setuptools && \
@@ -179,6 +180,14 @@ RUN export tmp=$(mktemp -d) && \
     popd && \
     rm -rf $tmp && \
     rm -f /var/lib/apt/lists/*; rm -rf /tmp/*; rm -rf ~/.cache
+
+RUN cd /tmp && \
+    wget https://github.com/OJ/gobuster/releases/download/v2.0.1/gobuster-linux-amd64.7z && \
+    7z x gobuster-linux-amd64.7z && \
+    rm -f gobuster-linux-amd64.7z && \
+    mv gobuster-linux-amd64/gobuster /usr/local/bin && \
+    chmod +x /usr/local/bin/gobuster && \
+    rm -rf gobuster-linux-amd64
 
 RUN echo "#!/bin/bash" > ~/msfconsole && \
     echo "pass=`sed -n 's/\s*password:\s*\"\([0-9a-z]*\)\"$/\1/p' /opt/metasploit/apps/pro/ui/config/database.yml | sort | uniq`" >> ~/msfconsole && \
