@@ -10,12 +10,14 @@ RUN dpkg --add-architecture i386 && \
         p7zip-full python-pip python3-pip python-dev build-essential cmake \
         unzip xz-utils gcc g++ libc6-dev-i386 ruby-dev \
         lib32stdc++6 libxml2-dev libxslt1-dev libssl-dev \
-        libboost1.58-dev libpython2.7-dev libc6-dbg libc6-dbg:i386 sudo \
-        gcc-multilib g++-multilib libcapstone3 libcapstone-dev && \
+        libpython2.7-dev libc6-dbg libc6-dbg:i386 sudo \
+        gcc-multilib g++-multilib libcapstone3 libcapstone-dev \
+        ncurses-dev && \
     pip install --upgrade pip setuptools && \
-    pip3 install --upgrde setuptools && \
+    pip3 install --upgrade setuptools && \
     pip install --upgrade ipython pwntools ipython ropgadget && \
     pip3 install --upgrade ipython && \
+    pushd ~ && \
     git clone https://github.com/Happyholic1203/dotfiles && \
     pushd ~/dotfiles && \
     chmod +x ./install.sh && \
@@ -25,6 +27,7 @@ RUN dpkg --add-architecture i386 && \
     echo "TERM=xterm-256color tmux" >> ~/init && \
     echo "bash" >> ~/init && \
     chmod +x ~/init && \
+    popd && \
     popd && \
     pushd ~ && \
     git clone https://github.com/longld/peda ~/peda && \
@@ -52,10 +55,10 @@ RUN dpkg --add-architecture i386 && \
     echo "[POST EXPLOITATION]" && \
     apt-get install -yq metasploit-framework && \
     echo "[MISC]" && \
-    apt-get install nettools iputils-ping dnsutils netcat socat binwalk && \
+    apt-get install -yq net-tools iputils-ping dnsutils netcat socat binwalk && \
     echo "Cleaning up" && \
     rm -f /var/cache/apt/archives/*.deb && \
-    rm -f /var/lib/apt/lists/*; rm -rf /tmp/*; rm -rf ~/.cache
+    rm -rf /var/lib/apt/lists/*; rm -rf /tmp/*; rm -rf ~/.cache
 
 RUN export tmp=$(mktemp -d) && \
     pushd $tmp && \
