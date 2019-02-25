@@ -39,13 +39,14 @@ RUN dpkg --add-architecture i386 && \
     popd && \
     echo "=== Installing selected Kali packages ===" && \
     echo "[WEB]" && \
-    apt-get install -yq whatweb sqlmap gobuster && \
+    apt-get install -yq sqlmap gobuster sublist3r dirb wfuzz xsser && \
     echo "[RECON]" && \
-    apt-get install -yq nmap recon-ng && \
+    apt-get install -yq whatweb nmap recon-ng wafw00f && \
     echo "[VA]" && \
-    apt-get install -yq openvas wpscan sslscan && \
+    apt-get install -yq openvas wpscan sslscan nikto && \
     echo "[PASSWORD]" && \
-    apt-get install -yq john hashcat hashcat-utils wordlists && \
+    apt-get install -yq john hashcat hashcat-utils wordlists hydra seclists \
+        medusa ncrack padbuster patator && \
     echo "[BINARY ANALYSIS]" && \
     apt-get install -yq gdb qemu ltrace strace gdbserver nasm binutils \
         radare2 afl && \
@@ -53,9 +54,10 @@ RUN dpkg --add-architecture i386 && \
     echo "[SYMBOLIC EXECUTION]" && \
     apt-get install -yq python-z3 && \
     echo "[POST EXPLOITATION]" && \
-    apt-get install -yq metasploit-framework && \
+    apt-get install -yq metasploit-framework webshells weevely && \
     echo "[MISC]" && \
-    apt-get install -yq net-tools iputils-ping dnsutils netcat socat binwalk && \
+    apt-get install -yq net-tools iputils-ping dnsutils netcat socat binwalk \
+        mitmproxy nishang proxychains && \
     echo "Cleaning up" && \
     rm -f /var/cache/apt/archives/*.deb && \
     rm -rf /var/lib/apt/lists/*; rm -rf /tmp/*; rm -rf ~/.cache
