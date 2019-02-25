@@ -1,6 +1,6 @@
 #!/bin/bash
 
-version=0.3.0
+version=0.4.0
 
 echo "Start time: $(date "+%Y-%m-%d %H:%M:%S")"
 docker build -t happyholic1203/hackbox:$version .
