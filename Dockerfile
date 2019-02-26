@@ -57,7 +57,7 @@ RUN dpkg --add-architecture i386 && \
     apt-get install -yq metasploit-framework webshells weevely && \
     echo "[MISC]" && \
     apt-get install -yq net-tools iputils-ping dnsutils netcat socat binwalk \
-        mitmproxy nishang proxychains && \
+        mitmproxy nishang proxychains openvpn && \
     echo "Cleaning up" && \
     rm -f /var/cache/apt/archives/*.deb && \
     rm -rf /var/lib/apt/lists/*; rm -rf /tmp/*; rm -rf ~/.cache
