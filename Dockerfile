@@ -39,7 +39,15 @@ RUN dpkg --add-architecture i386 && \
     popd && \
     echo "=== Installing selected Kali packages ===" && \
     echo "[WEB]" && \
-    apt-get install -yq sqlmap gobuster sublist3r dirb wfuzz xsser && \
+    apt-get install -yq sqlmap gobuster sublist3r dirb wfuzz xsser \
+        exploitdb && \
+    pushd ~ && \
+    git clone https://github.com/Dionach/CMSmap && \
+    pushd CMSmap && \
+    popd && \
+    pip3 install . && \
+    python3 -c 'from cmsmap.lib.coreupdate import updater; updater.UpdateTmpCMS()' && \
+    popd && \
     echo "[RECON]" && \
     apt-get install -yq whatweb nmap recon-ng wafw00f && \
     echo "[VA]" && \
