@@ -44,10 +44,12 @@ RUN dpkg --add-architecture i386 && \
     pushd ~ && \
     git clone https://github.com/Dionach/CMSmap && \
     pushd CMSmap && \
-    popd && \
     pip3 install . && \
+    popd && \
     python3 -c 'from cmsmap.lib.coreupdate import updater; updater.UpdateTmpCMS()' && \
     popd && \
+    curl https://raw.githubusercontent.com/HA71/WhatCMS/master/whatcms.sh > /usr/local/bin/whatcms.sh && \
+    chmod +x /usr/local/bin/whatcms.sh && \
     echo "[RECON]" && \
     apt-get install -yq whatweb nmap recon-ng wafw00f && \
     echo "[VA]" && \
