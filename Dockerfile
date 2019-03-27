@@ -15,8 +15,8 @@ RUN dpkg --add-architecture i386 && \
         ncurses-dev && \
     pip install --upgrade pip setuptools && \
     pip3 install --upgrade setuptools && \
-    pip install --upgrade ipython pwntools ipython ropgadget && \
-    pip3 install --upgrade ipython && \
+    pip install --upgrade ipython pwntools ropgadget && \
+    pip3 install --upgrade ipython pwntools ropgadget && \
     pushd ~ && \
     git clone https://github.com/Happyholic1203/dotfiles && \
     pushd ~/dotfiles && \
