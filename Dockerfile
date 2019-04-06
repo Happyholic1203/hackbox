@@ -12,11 +12,11 @@ RUN dpkg --add-architecture i386 && \
         lib32stdc++6 libxml2-dev libxslt1-dev libssl-dev \
         libpython2.7-dev libc6-dbg libc6-dbg:i386 sudo \
         gcc-multilib g++-multilib libcapstone3 libcapstone-dev \
-        ncurses-dev && \
+        ncurses-dev e2tools qemu-system && \
     pip install --upgrade pip setuptools && \
     pip3 install --upgrade setuptools && \
     pip install --upgrade ipython pwntools ropgadget && \
-    pip3 install --upgrade ipython pwntools ropgadget && \
+    pip3 install --upgrade ipython pwntools ropgadget arm_now && \
     pushd ~ && \
     git clone https://github.com/Happyholic1203/dotfiles && \
     pushd ~/dotfiles && \
