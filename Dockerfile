@@ -30,7 +30,7 @@ RUN dpkg --add-architecture i386 && \
     popd && \
     popd && \
     pushd ~ && \
-    git clone https://github.com/longld/peda ~/peda && \
+    git clone https://github.com/scwuaptx/peda ~/peda && \
     git clone https://github.com/Happyholic1203/Pwngdb ~/Pwngdb && \
     git clone https://github.com/JonathanSalwan/ROPgadget ~/ROPgadget && \
     cp ~/Pwngdb/.gdbinit ~/ && \
